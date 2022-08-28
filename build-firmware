@@ -6,7 +6,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/Configurations"
 MARLIN_DIR="${SCRIPT_DIR}/Marlin"
 if [ "${GITHUB_ACTIONS}" = "true" ]; then
-    ARTIFACTS_DIR="${CONFIG_DIR}/.artifacts"
+    ARTIFACTS_DIR="${SCRIPT_DIR}/.artifacts"
 fi
 
 # All Marlin Python scripts are python3-compatible, but most have a
@@ -30,12 +30,15 @@ CURRENT_BRANCH="$(git -C "${MARLIN_DIR}" rev-parse --abbrev-ref HEAD)"
 CURRENT_BRANCH_REV="$(git -C "${MARLIN_DIR}" log --format="%h" -n 1 HEAD)"
 CURRENT_BRANCH_DATE="$(git -C "${MARLIN_DIR}" show -s --format=%ci HEAD | perl -ne '/^(\d{4})-(\d{2})-(\d{2})/ && print $1 . $2 . $3')"
 
-if ! grep -q "env:e3v2" "${MARLIN_DIR}/platformio.ini"; then
-    cat <<"EOM" >> "${MARLIN_DIR}/platformio.ini"
+git -C "${MARLIN_DIR}" checkout -- \
+    platformio.ini \
+    Marlin/Configuration.h \
+    Marlin/Configuration_adv.h
+cat <<"EOM" >> "${MARLIN_DIR}/platformio.ini"
 
 [env:e3v2]
-extends = env:STM32F103RET6_creality
-build_flags = ${env:STM32F103RET6_creality.build_flags} -DCUSTOM_VERSION_FILE=_Version.h
+extends = env:STM32F103RE_creality
+build_flags = ${env:STM32F103RE_creality.build_flags} -DCUSTOM_VERSION_FILE=_Version.h
 
 [env:wdi3p]
 extends = env:mega2560
@@ -43,7 +46,6 @@ build_flags = ${env:mega2560.build_flags} -DCUSTOM_VERSION_FILE=_Version.h
 extra_scripts = ${env:mega2560.extra_scripts}
   pre:buildroot/share/PlatformIO/scripts/random-bin.py
 EOM
-fi
 
 cd "${MARLIN_DIR}"
 PATH="${PATH}:${MARLIN_DIR}/buildroot/bin"
@@ -51,8 +53,12 @@ PATH="${PATH}:${MARLIN_DIR}/buildroot/bin"
 if [ "${ENVIRONMENT}" = "e3v2" ]; then
     cp \
         "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI/Configuration.h" \
-        "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI/Configuration_adv.h" \
         "${MARLIN_DIR}/Marlin/"
+    if [ -e "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI/Configuration_adv.h" ]; then
+        cp \
+            "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI/Configuration_adv.h" \
+            "${MARLIN_DIR}/Marlin/"
+    fi
 
     opt_set STRING_CONFIG_H_AUTHOR '"(rfinnie)"'
     opt_enable PID_EDIT_MENU
@@ -72,7 +78,7 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_enable DEBUG_LEVELING_FEATURE
     opt_enable ABL_BILINEAR_SUBDIVISION
     opt_enable LCD_BED_LEVELING
-    opt_enable LEVEL_BED_CORNERS
+    opt_enable LCD_BED_TRAMMING
     opt_enable Z_SAFE_HOMING
     opt_set Z_SAFE_HOMING_X_POINT X_CENTER
     opt_set Z_SAFE_HOMING_Y_POINT Y_CENTER
@@ -94,8 +100,12 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
 elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
     cp \
         "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus/Configuration.h" \
-        "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus/Configuration_adv.h" \
         "${MARLIN_DIR}/Marlin/"
+    if [ -e "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus/Configuration_adv.h" ]; then
+        cp \
+            "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus/Configuration_adv.h" \
+            "${MARLIN_DIR}/Marlin/"
+    fi
 
     opt_set STRING_CONFIG_H_AUTHOR '"(rfinnie)"'
     opt_set Z_MIN_ENDSTOP_INVERTING false
@@ -162,6 +172,10 @@ if [ -n "${ARTIFACTS_DIR}" ]; then
         [ -e "${fw}" ] || continue
         cp "${fw}" "${ARTIFACTS_DIR}/${ENVIRONMENT}/"
     done
+
+    if [ "${ENVIRONMENT}" = "e3v2" ]; then
+        cp -a "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/LCD Files" "${ARTIFACTS_DIR}/${ENVIRONMENT}/"
+    fi
 fi
 
 if [ -n "${TMPBIN}" ]; then
