@@ -149,7 +149,7 @@ env \
     STRING_DISTRIBUTION_DATE="${NOW}" \
     SHORT_BUILD_VERSION="${NOWSHORT}" \
     DETAILED_BUILD_VERSION="${CURRENT_BRANCH}-${CURRENT_BRANCH_DATE}-g${CURRENT_BRANCH_REV} (config ${CONFIG_BRANCH}-${CONFIG_BRANCH_DATE}-g${CONFIG_BRANCH_REV})" \
-    SOURCE_CODE_URL="github.com/rfinnie/Marlin" \
+    SOURCE_CODE_URL="github.com/rfinnie/marlin-personal" \
     DEFAULT_MACHINE_UUID="${MACHINE_UUID}" \
     WEBSITE_URL="finnie.org" \
     "${MARLIN_DIR}/buildroot/bin/generate_version"
