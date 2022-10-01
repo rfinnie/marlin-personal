@@ -61,15 +61,18 @@ EOM
 cd "${MARLIN_DIR}"
 PATH="${PATH}:${MARLIN_DIR}/buildroot/bin"
 
+copy_config() {
+    config_dir="$1"
+    [ -d "${config_dir}" ]
+    for file in Configuration.h Configuration_adv.h; do
+        if [ -e "${config_dir}/${file}" ]; then
+            cp "${config_dir}/${file}" "${MARLIN_DIR}/Marlin/${file}"
+        fi
+    done
+}
+
 if [ "${ENVIRONMENT}" = "e3v2" ]; then
-    cp \
-        "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI/Configuration.h" \
-        "${MARLIN_DIR}/Marlin/"
-    if [ -e "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI/Configuration_adv.h" ]; then
-        cp \
-            "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI/Configuration_adv.h" \
-            "${MARLIN_DIR}/Marlin/"
-    fi
+    copy_config "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI"
 
     opt_set STRING_CONFIG_H_AUTHOR '"(rfinnie)"'
     opt_enable PID_EDIT_MENU
@@ -114,14 +117,7 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
 
     MACHINE_UUID="cc4afbb5-716f-4b2b-ad1a-90ba720b1b8a"
 elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
-    cp \
-        "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus/Configuration.h" \
-        "${MARLIN_DIR}/Marlin/"
-    if [ -e "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus/Configuration_adv.h" ]; then
-        cp \
-            "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus/Configuration_adv.h" \
-            "${MARLIN_DIR}/Marlin/"
-    fi
+    copy_config "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus"
 
     opt_set STRING_CONFIG_H_AUTHOR '"(rfinnie)"'
     opt_set Z_MIN_ENDSTOP_INVERTING false
