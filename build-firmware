@@ -93,12 +93,17 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_set PREHEAT_2_TEMP_BED 110
     opt_disable NOZZLE_PARK_FEATURE
     opt_disable DWIN_CREALITY_LCD
-    opt_disable DWIN_MARLINUI_LANDSCAPE
-    opt_enable DWIN_MARLINUI_PORTRAIT
+    opt_enable DWIN_MARLINUI_LANDSCAPE
 
     opt_enable BABYSTEP_ZPROBE_OFFSET
     opt_enable HOST_ACTION_COMMANDS
     opt_enable HOST_PROMPT_SUPPORT
+    opt_enable PROBE_OFFSET_WIZARD
+    opt_enable PROBE_DEPLOY_STOW_MENU
+    opt_enable LCD_INFO_MENU
+    opt_enable TURBO_BACK_MENU_ITEM
+    opt_enable PREHEAT_SHORTCUT_MENU_ITEM
+    opt_enable LCD_SHOW_E_TOTAL
 
     MACHINE_UUID="cc4afbb5-716f-4b2b-ad1a-90ba720b1b8a"
 elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
