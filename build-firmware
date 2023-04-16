@@ -120,8 +120,8 @@ elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
     copy_config "${CONFIG_DIR}/config/examples/Wanhao/Duplicator i3 Plus"
 
     opt_set STRING_CONFIG_H_AUTHOR '"(rfinnie)"'
-    opt_set Z_MIN_ENDSTOP_INVERTING false
-    opt_set Z_MIN_PROBE_ENDSTOP_INVERTING false
+    opt_set Z_MIN_ENDSTOP_HIT_STATE HIGH
+    opt_set Z_MIN_PROBE_ENDSTOP_HIT_STATE HIGH
     opt_set DEFAULT_MAX_FEEDRATE '{ 450, 450, 12, 25 }'
     opt_enable BLTOUCH
     opt_set NOZZLE_TO_PROBE_OFFSET '{ -30, -46, -1.70 }'
