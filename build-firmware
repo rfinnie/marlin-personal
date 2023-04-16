@@ -5,9 +5,7 @@ set -e
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_DIR="${SCRIPT_DIR}/Configurations"
 MARLIN_DIR="${SCRIPT_DIR}/Marlin"
-if [ "${GITHUB_ACTIONS}" = "true" ]; then
-    ARTIFACTS_DIR="${SCRIPT_DIR}/.artifacts"
-fi
+ARTIFACTS_DIR="${SCRIPT_DIR}/.artifacts"
 
 # All Marlin Python scripts are python3-compatible, but most have a
 # "python" shebang.  For python3-only envs, set up a workaround.
@@ -170,23 +168,24 @@ platformio run --project-dir "${MARLIN_DIR}" --environment "${ENVIRONMENT}" --ta
 platformio run --project-dir "${MARLIN_DIR}" --environment "${ENVIRONMENT}"
 
 if [ -n "${ARTIFACTS_DIR}" ]; then
-    mkdir -p "${ARTIFACTS_DIR}/${ENVIRONMENT}"
+    _abd="${ARTIFACTS_DIR}/${ENVIRONMENT}/${NOWSHORT}"
+    mkdir -p "${_abd}"
     cp \
         "${MARLIN_DIR}/Marlin/_Version.h" \
         "${MARLIN_DIR}/Marlin/Configuration.h" \
         "${MARLIN_DIR}/Marlin/Configuration_adv.h" \
-        "${ARTIFACTS_DIR}/${ENVIRONMENT}/"
+        "${_abd}/"
 
-    diff -u "${CONFIG_DIR}/config/default/Configuration.h" "${MARLIN_DIR}/Marlin/Configuration.h" >"${ARTIFACTS_DIR}/${ENVIRONMENT}/Configuration.h.diff" || true
-    diff -u "${CONFIG_DIR}/config/default/Configuration_adv.h" "${MARLIN_DIR}/Marlin/Configuration_adv.h" >"${ARTIFACTS_DIR}/${ENVIRONMENT}/Configuration_adv.h.diff" || true
+    diff -u "${CONFIG_DIR}/config/default/Configuration.h" "${MARLIN_DIR}/Marlin/Configuration.h" >"${_abd}/Configuration.h.diff" || true
+    diff -u "${CONFIG_DIR}/config/default/Configuration_adv.h" "${MARLIN_DIR}/Marlin/Configuration_adv.h" >"${_abd}/Configuration_adv.h.diff" || true
 
     for fw in "${MARLIN_DIR}/.pio/build/${ENVIRONMENT}"/*.bin "${MARLIN_DIR}/.pio/build/${ENVIRONMENT}"/*.hex; do
         [ -e "${fw}" ] || continue
-        cp "${fw}" "${ARTIFACTS_DIR}/${ENVIRONMENT}/"
+        cp "${fw}" "${_abd}/"
     done
 
     if [ "${ENVIRONMENT}" = "e3v2" ]; then
-        cp -a "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/LCD Files" "${ARTIFACTS_DIR}/${ENVIRONMENT}/"
+        cp -a "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/LCD Files" "${_abd}/"
     fi
 fi
 
