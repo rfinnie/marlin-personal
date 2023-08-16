@@ -112,6 +112,8 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_enable TURBO_BACK_MENU_ITEM
     opt_enable PREHEAT_SHORTCUT_MENU_ITEM
     opt_enable LCD_SHOW_E_TOTAL
+    opt_enable SET_PROGRESS_MANUALLY
+    opt_enable M73_REPORT
 
     MACHINE_UUID="cc4afbb5-716f-4b2b-ad1a-90ba720b1b8a"
 elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
