@@ -114,10 +114,10 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_enable LCD_SHOW_E_TOTAL
     opt_enable SET_PROGRESS_MANUALLY
     opt_enable M73_REPORT
-    opt_set X_CURRENT 580   # 800 defaulv V422, 580 default V427
-    opt_set Y_CURRENT 580   # 800 defaulv V422, 580 default V427
-    opt_set Z_CURRENT 800   # 800 default V422, 580 default V427, leaving at 800 due to dual Z motors
-    opt_set E0_CURRENT 650  # 800 defaulv V422, 650 default V427
+    opt_set X_CURRENT 580
+    opt_set Y_CURRENT 580
+    opt_set Z_CURRENT 580
+    opt_set E0_CURRENT 650
 
     MACHINE_UUID="cc4afbb5-716f-4b2b-ad1a-90ba720b1b8a"
 elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
