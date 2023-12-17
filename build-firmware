@@ -52,8 +52,6 @@ build_flags = ${env:STM32F103RE_creality.build_flags} -DCUSTOM_VERSION_FILE=_Ver
 [env:wdi3p]
 extends = env:mega2560
 build_flags = ${env:mega2560.build_flags} -DCUSTOM_VERSION_FILE=_Version.h
-extra_scripts = ${env:mega2560.extra_scripts}
-  pre:buildroot/share/PlatformIO/scripts/random-bin.py
 EOM
 
 cd "${MARLIN_DIR}"
@@ -101,7 +99,9 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_set PREHEAT_2_TEMP_BED 110
     opt_disable NOZZLE_PARK_FEATURE
     opt_disable DWIN_CREALITY_LCD
+    opt_disable DWIN_MARLINUI_PORTRAIT
     opt_enable DWIN_MARLINUI_LANDSCAPE
+    opt_set MOTHERBOARD BOARD_CREALITY_V427
 
     opt_enable BABYSTEP_ZPROBE_OFFSET
     opt_enable HOST_ACTION_COMMANDS
@@ -114,6 +114,10 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_enable LCD_SHOW_E_TOTAL
     opt_enable SET_PROGRESS_MANUALLY
     opt_enable M73_REPORT
+    opt_set X_CURRENT 580   # 800 defaulv V422, 580 default V427
+    opt_set Y_CURRENT 580   # 800 defaulv V422, 580 default V427
+    opt_set Z_CURRENT 800   # 800 default V422, 580 default V427, leaving at 800 due to dual Z motors
+    opt_set E0_CURRENT 650  # 800 defaulv V422, 650 default V427
 
     MACHINE_UUID="cc4afbb5-716f-4b2b-ad1a-90ba720b1b8a"
 elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
@@ -131,8 +135,8 @@ elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
     opt_set Z_CLEARANCE_DEPLOY_PROBE 5
     opt_set Z_CLEARANCE_BETWEEN_PROBES 2
     opt_set Z_CLEARANCE_MULTI_PROBE 2
-    opt_set Z_PROBE_OFFSET_RANGE_MIN -10
-    opt_set Z_PROBE_OFFSET_RANGE_MAX 10
+    opt_set PROBE_OFFSET_ZMIN -10
+    opt_set PROBE_OFFSET_ZMAX 10
     opt_enable Z_MIN_PROBE_REPEATABILITY_TEST
     opt_set Z_MAX_POS 174
     opt_enable AUTO_BED_LEVELING_BILINEAR
