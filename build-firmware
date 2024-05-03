@@ -73,6 +73,8 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_set STRING_CONFIG_H_AUTHOR '"(rfinnie)"'
     opt_enable PID_EDIT_MENU
     opt_enable PID_AUTOTUNE_MENU
+    # E steps from 93 to 424.9 for Creality Sprite direct drive extruder
+    opt_set DEFAULT_AXIS_STEPS_PER_UNIT '{ 80, 80, 400, 424.9 }'
     opt_set DEFAULT_MAX_FEEDRATE '{ 500, 500, 12, 25 }'
     opt_disable PROBE_MANUALLY
     opt_enable BLTOUCH
