@@ -115,6 +115,7 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_set DEFAULT_bedKp  313.89
     opt_set DEFAULT_bedKi   61.31
     opt_set DEFAULT_bedKd 1071.41
+    opt_set Z_MAX_POS 204
 
     opt_enable BABYSTEP_ZPROBE_OFFSET
     opt_enable HOST_ACTION_COMMANDS
