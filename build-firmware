@@ -99,6 +99,11 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_set PREHEAT_1_TEMP_BED 60
     opt_set PREHEAT_2_TEMP_HOTEND 235
     opt_set PREHEAT_2_TEMP_BED 110
+    opt_set PREHEAT_3_LABEL '"Load/Unload"'
+    opt_set PREHEAT_3_TEMP_HOTEND 200
+    opt_set PREHEAT_3_TEMP_BED 0
+    opt_set PREHEAT_3_TEMP_CHAMBER 35
+    opt_set PREHEAT_3_FAN_SPEED 0
     opt_disable NOZZLE_PARK_FEATURE
     opt_disable DWIN_CREALITY_LCD
     opt_disable DWIN_MARLINUI_PORTRAIT
