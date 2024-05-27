@@ -78,7 +78,7 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_set DEFAULT_MAX_FEEDRATE '{ 500, 500, 12, 25 }'
     opt_disable PROBE_MANUALLY
     opt_enable BLTOUCH
-    opt_set NOZZLE_TO_PROBE_OFFSET '{ -42, -10, -2.20 }'
+    opt_set NOZZLE_TO_PROBE_OFFSET '{ -42, -10, -1.90 }'
     opt_set XY_PROBE_FEEDRATE '(120*60)'
     opt_set Z_PROBE_FEEDRATE_FAST '(12*60)'
     opt_set MULTIPLE_PROBING 2
@@ -97,21 +97,23 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_set HOMING_FEEDRATE_MM_M '{ (60*60), (60*60), (12*60) }'
     opt_set PREHEAT_1_TEMP_HOTEND 200
     opt_set PREHEAT_1_TEMP_BED 60
+    opt_set PREHEAT_1_FAN_SPEED 64
     opt_set PREHEAT_2_TEMP_HOTEND 235
     opt_set PREHEAT_2_TEMP_BED 110
+    opt_set PREHEAT_2_FAN_SPEED 128
     opt_set PREHEAT_3_LABEL '"Load/Unload"'
     opt_set PREHEAT_3_TEMP_HOTEND 200
     opt_set PREHEAT_3_TEMP_BED 0
     opt_set PREHEAT_3_TEMP_CHAMBER 35
-    opt_set PREHEAT_3_FAN_SPEED 0
+    opt_set PREHEAT_3_FAN_SPEED 64
     opt_disable NOZZLE_PARK_FEATURE
     opt_disable DWIN_CREALITY_LCD
     opt_disable DWIN_MARLINUI_PORTRAIT
     opt_enable DWIN_MARLINUI_LANDSCAPE
     opt_set MOTHERBOARD BOARD_CREALITY_V427
-    opt_set DEFAULT_Kp  28.85
-    opt_set DEFAULT_Ki   2.45
-    opt_set DEFAULT_Kd  84.82
+    opt_set DEFAULT_Kp  31.92
+    opt_set DEFAULT_Ki   3.50
+    opt_set DEFAULT_Kd  72.77
     opt_set DEFAULT_bedKp  313.89
     opt_set DEFAULT_bedKi   61.31
     opt_set DEFAULT_bedKd 1071.41
