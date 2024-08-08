@@ -5,7 +5,14 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    name: Build (${{ matrix.target }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+        - e3v2
+        - wdi3p
+      fail-fast: false
     steps:
     - uses: actions/checkout@v4
     - uses: actions/checkout@v4
@@ -22,21 +29,19 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-platformio-pip
+        key: ${{ runner.os }}-${{ matrix.target }}-platformio-pip
     - name: Cache PlatformIO
       uses: actions/cache@v4
       with:
         path: ~/.platformio
-        key: ${{ runner.os }}-platformio
+        key: ${{ runner.os }}-${{ matrix.target }}-platformio
     - name: Install PlatformIO
       run: |
         python -m pip install --upgrade pip
         pip install --upgrade platformio
-    - name: Build Ender 3 V2 firmware
-      run: ./build-firmware e3v2
-    - name: Build Wanhao Duplicator i3 Plus firmware
-      run: ./build-firmware wdi3p
+    - name: Build firmware (${{ matrix.target }})
+      run: ./build-firmware ${{ matrix.target }}
     - uses: actions/upload-artifact@v4
       with:
-        name: marlin-firmware-${{ github.job }}-${{ github.run_number }}-${{ github.run_id }}
+        name: marlin-firmware-${{ matrix.target }}-${{ github.job }}-${{ github.run_number }}-${{ github.run_id }}
         path: .artifacts
