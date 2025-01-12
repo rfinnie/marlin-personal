@@ -46,8 +46,8 @@ SCRIPT_BRANCH_ID="${SCRIPT_BRANCH}-${SCRIPT_BRANCH_DATE}-g${SCRIPT_BRANCH_REV}"
 cat <<"EOM" >> "${MARLIN_DIR}/platformio.ini"
 
 [env:e3v2]
-extends = env:STM32F103RE_creality
-build_flags = ${env:STM32F103RE_creality.build_flags} -DCUSTOM_VERSION_FILE=_Version.h
+extends = env:STM32G0B1RE_btt
+build_flags = ${env:STM32G0B1RE_btt.build_flags} -DCUSTOM_VERSION_FILE=_Version.h
 
 [env:wdi3p]
 extends = env:mega2560
@@ -68,7 +68,7 @@ copy_config() {
 }
 
 if [ "${ENVIRONMENT}" = "e3v2" ]; then
-    copy_config "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/CrealityV422/MarlinUI"
+    copy_config "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/BigTreeTech SKR Mini E3 3.0/MarlinUI"
 
     opt_set STRING_CONFIG_H_AUTHOR '"(rfinnie)"'
     opt_enable PID_EDIT_MENU
@@ -110,7 +110,6 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_disable DWIN_CREALITY_LCD
     opt_disable DWIN_MARLINUI_PORTRAIT
     opt_enable DWIN_MARLINUI_LANDSCAPE
-    opt_set MOTHERBOARD BOARD_CREALITY_V427
     opt_set DEFAULT_Kp  31.92
     opt_set DEFAULT_Ki   3.50
     opt_set DEFAULT_Kd  72.77
@@ -118,6 +117,7 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_set DEFAULT_bedKi   61.31
     opt_set DEFAULT_bedKd 1071.41
     opt_set Z_MAX_POS 204
+    opt_add DIAG_JUMPERS_REMOVED
 
     opt_enable BABYSTEP_ZPROBE_OFFSET
     opt_enable HOST_ACTION_COMMANDS
@@ -130,11 +130,7 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_enable LCD_SHOW_E_TOTAL
     opt_enable SET_PROGRESS_MANUALLY
     opt_enable M73_REPORT
-    opt_set X_CURRENT 580
-    opt_set Y_CURRENT 580
-    opt_set Z_CURRENT 580
-    opt_set E0_CURRENT 650
-    opt_set LCD_SERIAL_PORT 3
+    opt_set LCD_SERIAL_PORT 1
 
     MACHINE_UUID="cc4afbb5-716f-4b2b-ad1a-90ba720b1b8a"
 elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
