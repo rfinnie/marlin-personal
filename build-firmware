@@ -24,6 +24,7 @@ git -C "${MARLIN_DIR}" checkout -- \
     platformio.ini \
     Marlin/Configuration.h \
     Marlin/Configuration_adv.h
+rm -f "${MARLIN_DIR}/Marlin/_Version.h"
 
 CONFIG_BRANCH="$(git -C "${CONFIG_DIR}" rev-parse --abbrev-ref HEAD)"
 CONFIG_BRANCH_REV="$(git -C "${CONFIG_DIR}" log --format="%h" -n 1 HEAD)"
@@ -179,6 +180,7 @@ elif [ "${ENVIRONMENT}" = "wdi3p" ]; then
 fi
 
 env \
+    ALLOW_GENERATE_VERSION=1 \
     READ_FILE="${MARLIN_DIR}/Marlin/Version.h" \
     WRITE_FILE="${MARLIN_DIR}/Marlin/_Version.h" \
     STRING_DISTRIBUTION_DATE="${NOW}" \
@@ -212,6 +214,7 @@ if [ -n "${ARTIFACTS_DIR}" ]; then
     if [ "${ENVIRONMENT}" = "e3v2" ]; then
         cp -a "${CONFIG_DIR}/config/examples/Creality/Ender-3 V2/LCD Files" "${_abd}/"
     fi
+    echo "Artifacts saved to ${_abd}/"
 fi
 
 if [ -n "${TMPBIN}" ]; then
