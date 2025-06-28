@@ -1,0 +1,38 @@
+fail_fast: false
+
+repos:
+  - repo: 'https://github.com/pre-commit/pre-commit-hooks'
+    rev: 'v4.4.0'
+    hooks:
+      - id: 'check-added-large-files'
+      - id: 'check-case-conflict'
+      - id: 'check-executables-have-shebangs'
+      - id: 'check-xml'
+      - id: 'check-yaml'
+        args:
+          - '--unsafe'
+      - id: 'check-json'
+      - id: 'check-shebang-scripts-are-executable'
+      - id: 'detect-private-key'
+      - id: 'end-of-file-fixer'
+      - id: 'fix-byte-order-marker'
+      - id: 'requirements-txt-fixer'
+      - id: 'trailing-whitespace'
+
+  - repo: 'https://github.com/adrienverge/yamllint.git'
+    rev: 'v1.32.0'
+    hooks:
+      - id: 'yamllint'
+        args:
+          - '-c'
+          - '.yamllint.yml'
+
+  - repo: 'https://github.com/koalaman/shellcheck-precommit'
+    rev: 'v0.10.0'
+    hooks:
+      - id: 'shellcheck'
+
+  - repo: 'https://github.com/rhysd/actionlint'
+    rev: 'v1.7.7'
+    hooks:
+      - id: 'actionlint'

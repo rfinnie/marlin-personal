@@ -1,47 +1,48 @@
-name: personal-firmware
-on:
+---
+name: 'personal-firmware'
+'on':
   pull_request:
   push:
   workflow_dispatch:
 jobs:
   build:
-    name: Build (${{ matrix.target }})
-    runs-on: ubuntu-latest
+    name: 'Build (${{ matrix.target }})'
+    runs-on: 'ubuntu-latest'
     strategy:
       matrix:
         target:
-        - e3v2
-        - wdi3p
+          - 'e3v2'
+          - 'wdi3p'
       fail-fast: false
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/checkout@v4
-      with:
-        repository: MarlinFirmware/Configurations
-        ref: bugfix-2.1.x
-        path: Configurations
-    - uses: actions/checkout@v4
-      with:
-        repository: MarlinFirmware/Marlin
-        ref: bugfix-2.1.x
-        path: Marlin
-    - name: Cache pip
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-${{ matrix.target }}-platformio-pip
-    - name: Cache PlatformIO
-      uses: actions/cache@v4
-      with:
-        path: ~/.platformio
-        key: ${{ runner.os }}-${{ matrix.target }}-platformio
-    - name: Install PlatformIO
-      run: |
-        python -m pip install --upgrade pip
-        pip install --upgrade platformio
-    - name: Build firmware (${{ matrix.target }})
-      run: ./build-firmware ${{ matrix.target }}
-    - uses: actions/upload-artifact@v4
-      with:
-        name: marlin-firmware-${{ matrix.target }}-${{ github.job }}-${{ github.run_number }}-${{ github.run_id }}
-        path: .artifacts
+      - uses: 'actions/checkout@v4'
+      - uses: 'actions/checkout@v4'
+        with:
+          repository: 'MarlinFirmware/Configurations'
+          ref: 'bugfix-2.1.x'
+          path: 'Configurations'
+      - uses: 'actions/checkout@v4'
+        with:
+          repository: 'MarlinFirmware/Marlin'
+          ref: 'bugfix-2.1.x'
+          path: 'Marlin'
+      - name: 'Cache pip'
+        uses: 'actions/cache@v4'
+        with:
+          path: '~/.cache/pip'
+          key: '${{ runner.os }}-${{ matrix.target }}-platformio-pip'
+      - name: 'Cache PlatformIO'
+        uses: 'actions/cache@v4'
+        with:
+          path: '~/.platformio'
+          key: '${{ runner.os }}-${{ matrix.target }}-platformio'
+      - name: 'Install PlatformIO'
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade platformio
+      - name: 'Build firmware (${{ matrix.target }})'
+        run: './build-firmware ${{ matrix.target }}'
+      - uses: 'actions/upload-artifact@v4'
+        with:
+          name: 'marlin-firmware-${{ matrix.target }}-${{ github.job }}-${{ github.run_number }}-${{ github.run_id }}'
+          path: '.artifacts'
