@@ -46,3 +46,4 @@ jobs:
         with:
           name: 'marlin-firmware-${{ matrix.target }}-${{ github.job }}-${{ github.run_number }}-${{ github.run_id }}'
           path: '.artifacts'
+          include-hidden-files: true
