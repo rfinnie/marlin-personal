@@ -6,3 +6,12 @@ These are the [Marlin firmware](https://github.com/MarlinFirmware/Marlin) config
 * [Wanhao Duplicator i3 Plus](https://www.finnie.org/2019/05/04/monoprice-maker-select-plus-3d-printer-mods/)
 
 Note that my printers have been so heavily modified that they only barely resemble their original printers. You should not use these configurations directly on your own printer.
+
+This document is provided under the following license:
+
+    SPDX-PackageName: marlin-personal
+    SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+    SPDX-PackageDownloadLocation: https://github.com/rfinnie/marlin-personal
+    SPDX-FileComment: README
+    SPDX-FileCopyrightText: SPDX-FileCopyrightText: © 2022 Ryan Finnie <ryan@finnie.org>
+    SPDX-License-Identifier: CC-BY-SA-4.0

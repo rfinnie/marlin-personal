@@ -1,3 +1,9 @@
+# SPDX-PackageName: marlin-personal
+# SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+# SPDX-PackageDownloadLocation: https://github.com/rfinnie/marlin-personal
+# SPDX-FileComment: GitHub Actions personal workflow
+# SPDX-FileCopyrightText: © 2022 Ryan Finnie <ryan@finnie.org>
+# SPDX-License-Identifier: MPL-2.0
 ---
 name: 'personal-firmware'
 'on':

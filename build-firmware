@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# SPDX-PackageName: marlin-personal
+# SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+# SPDX-PackageDownloadLocation: https://github.com/rfinnie/marlin-personal
+# SPDX-FileCopyrightText: © 2022 Ryan Finnie <ryan@finnie.org>
+# SPDX-License-Identifier: MPL-2.0
+
 set -e
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
