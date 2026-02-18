@@ -117,12 +117,12 @@ if [ "${ENVIRONMENT}" = "e3v2" ]; then
     opt_disable DWIN_CREALITY_LCD
     opt_disable DWIN_MARLINUI_PORTRAIT
     opt_enable DWIN_MARLINUI_LANDSCAPE
-    opt_set DEFAULT_Kp  31.92
-    opt_set DEFAULT_Ki   3.50
-    opt_set DEFAULT_Kd  72.77
-    opt_set DEFAULT_bedKp  313.89
-    opt_set DEFAULT_bedKi   61.31
-    opt_set DEFAULT_bedKd 1071.41
+    opt_set DEFAULT_KP  31.92
+    opt_set DEFAULT_KI   3.50
+    opt_set DEFAULT_KD  72.77
+    opt_set DEFAULT_BEDKP  313.89
+    opt_set DEFAULT_BEDKI   61.31
+    opt_set DEFAULT_BEDKD 1071.41
     opt_set Z_MAX_POS 204
     opt_add DIAG_JUMPERS_REMOVED
 
