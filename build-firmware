@@ -2,7 +2,7 @@
 
 # SPDX-PackageName: marlin-personal
 # SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
-# SPDX-PackageDownloadLocation: https://github.com/rfinnie/marlin-personal
+# SPDX-PackageDownloadLocation: https://codeberg.org/rfinnie/marlin-personal
 # SPDX-FileCopyrightText: © 2022 Ryan Finnie <ryan@finnie.org>
 # SPDX-License-Identifier: MPL-2.0
 
@@ -192,7 +192,7 @@ env \
     STRING_DISTRIBUTION_DATE="${NOW}" \
     SHORT_BUILD_VERSION="${NOWSHORT}" \
     DETAILED_BUILD_VERSION="${MARLIN_BRANCH_ID} config ${CONFIG_BRANCH_ID} script ${SCRIPT_BRANCH_ID}" \
-    SOURCE_CODE_URL="github.com/rfinnie/marlin-personal" \
+    SOURCE_CODE_URL="codeberg.org/rfinnie/marlin-personal" \
     DEFAULT_MACHINE_UUID="${MACHINE_UUID}" \
     WEBSITE_URL="finnie.org" \
     "${MARLIN_DIR}/buildroot/bin/generate_version"

@@ -11,7 +11,7 @@ This document is provided under the following license:
 
     SPDX-PackageName: marlin-personal
     SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
-    SPDX-PackageDownloadLocation: https://github.com/rfinnie/marlin-personal
+    SPDX-PackageDownloadLocation: https://codeberg.org/rfinnie/marlin-personal
     SPDX-FileComment: README
     SPDX-FileCopyrightText: SPDX-FileCopyrightText: © 2022 Ryan Finnie <ryan@finnie.org>
     SPDX-License-Identifier: CC-BY-SA-4.0
