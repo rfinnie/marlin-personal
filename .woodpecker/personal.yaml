@@ -28,21 +28,21 @@ steps:
       python -m pip install platformio
       ./build-firmware "$${TARGET}"
       artifact_fn="${CI_REPO_NAME}-${CI_PIPELINE_CREATED}-${CI_WORKFLOW_NAME}-$${TARGET}-${CI_PIPELINE_NUMBER}.tar.gz"
-      mkdir -p .assets
-      tar zcvf ".assets/$${artifact_fn}" -C .artifacts .
-  - name: "Upload assets"
+      mkdir -p .artifacts-dist
+      tar zcvf ".artifacts-dist/$${artifact_fn}" -C .artifacts .
+  - name: "Upload artifacts"
     image: "woodpeckerci/plugin-s3"
     settings:
       endpoint: "http://nibbler.snowman.lan:3900"
       path_style: true
       region: "garage"
-      bucket: "codeberg-ci-assets"
+      bucket: "ci-artifacts"
       access_key:
         from_secret: "garage_access_key"
       secret_key:
         from_secret: "garage_secret_key"
-      source: ".assets/*"
-      strip_prefix: ".assets/"
+      source: ".artifacts-dist/*"
+      strip_prefix: ".artifacts-dist/"
       target: "/"
   - name: "Notify Mastodon if failure"
     when:
