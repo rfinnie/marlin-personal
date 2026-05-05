@@ -17,6 +17,7 @@ steps:
   - name: "Clone upstream"
     image: "debian"
     commands: |
+      set -x
       apt update
       apt -y install git
 
@@ -25,6 +26,7 @@ steps:
   - name: "Build (${TARGET})"
     image: "python:3.14-trixie"
     commands: |
+      set -x
       python -m pip install platformio
       ./build-firmware "$${TARGET}"
       artifact_fn="${CI_REPO_NAME}-${CI_PIPELINE_CREATED}-${CI_WORKFLOW_NAME}-$${TARGET}-${CI_PIPELINE_NUMBER}.tar.gz"
