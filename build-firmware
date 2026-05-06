@@ -209,6 +209,9 @@ if [ -n "${ARTIFACTS_DIR}" ]; then
         "${MARLIN_DIR}/Marlin/Configuration_adv.h" \
         "${_abd}/"
 
+    git -C "${MARLIN_DIR}" add --intent-to-add .
+    (git -C "${MARLIN_DIR}" status; echo; git -C "${MARLIN_DIR}" diff) >"${_abd}/Marlin.patch"
+
     diff -u "${CONFIG_DIR}/config/default/Configuration.h" "${MARLIN_DIR}/Marlin/Configuration.h" >"${_abd}/Configuration.h.diff" || true
     diff -u "${CONFIG_DIR}/config/default/Configuration_adv.h" "${MARLIN_DIR}/Marlin/Configuration_adv.h" >"${_abd}/Configuration_adv.h.diff" || true
 
