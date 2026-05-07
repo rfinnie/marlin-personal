@@ -7,14 +7,10 @@
 ---
 when:
   - event: ["push", "pull_request", "manual"]
-matrix:
-  include:
-    - TARGET: "e3v2"
-    - TARGET: "wdi3p"
 labels:
   platform: "linux/amd64"
 steps:
-  - name: "Build (${TARGET})"
+  - name: "Build"
     image: "debian"
     commands: |
       set -x
@@ -25,11 +21,14 @@ steps:
       git clone --depth=1 --no-tags --branch=bugfix-2.1.x https://github.com/MarlinFirmware/Marlin
       git clone --depth=1 --no-tags --branch=bugfix-2.1.x https://github.com/MarlinFirmware/Configurations
 
-      ./build-firmware "$${TARGET}"
-      artifact_fn="${CI_REPO_NAME}-${CI_PIPELINE_CREATED}-${CI_WORKFLOW_NAME}-$${TARGET}-${CI_PIPELINE_NUMBER}.tar.gz"
+      ret=0
+      ./build-firmware e3v2 || ret=$?
+      ./build-firmware wdi3p || ret=$?
+      artifact_fn="${CI_REPO_NAME}-${CI_PIPELINE_CREATED}-${CI_WORKFLOW_NAME}-${CI_PIPELINE_NUMBER}.tar.gz"
       mkdir -p .artifacts-dist
       tar zcvf ".artifacts-dist/$${artifact_fn}" -C .artifacts .
       curl -v --fail-with-body -T ".artifacts-dist/$${artifact_fn}" -H "Authorization: Basic $${ASSETS_AUTH}" "http://artifacts.snowman.lan/$${artifact_fn}"
+      exit "$ret"
     environment:
       ASSETS_AUTH:
         from_secret: "ASSETS_AUTH"
