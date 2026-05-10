@@ -22,12 +22,29 @@ steps:
       git clone --depth=1 --no-tags --branch=bugfix-2.1.x https://github.com/MarlinFirmware/Configurations
 
       ret=0
-      ./build-firmware e3v2 || ret=$?
-      ./build-firmware wdi3p || ret=$?
+      e3v2_ret=0
+      ./build-firmware e3v2 || e3v2_ret=$?
+      [ "$e3v2_ret" = 0 ] || ret="$e3v2_ret"
+      wdi3p_ret=0
+      ./build-firmware wdi3p || wdi3p_ret=$?
+      [ "$wdi3p_ret" = 0 ] || ret="$wdi3p_ret"
+      {
+          echo "### Builds"
+          echo ""
+          echo "- e3v2 exited $${e3v2_ret}"
+          echo "- wdi3p exited $${wdi3p_ret}"
+          echo ""
+      } >>"$${CI_WORKSPACE}/.ci-pipeline-summary"
       artifact_fn="${CI_REPO_NAME}-${CI_PIPELINE_CREATED}-${CI_WORKFLOW_NAME}-${CI_PIPELINE_NUMBER}.tar.gz"
       mkdir -p .artifacts-dist
       tar zcvf ".artifacts-dist/$${artifact_fn}" -C .artifacts .
       curl --fail-with-body -T ".artifacts-dist/$${artifact_fn}" -H "Authorization: Basic $${ASSETS_AUTH}" "http://artifacts.snowman.lan/$${artifact_fn}"
+      {
+          echo "### Artifacts"
+          echo ""
+          echo "- http://artifacts.snowman.lan/$${artifact_fn}"
+          echo ""
+      } >>"$${CI_WORKSPACE}/.ci-pipeline-summary"
       exit "$ret"
     environment:
       ASSETS_AUTH:
@@ -46,3 +63,7 @@ steps:
 
         Pipeline: {{ CI_PIPELINE_URL }}
         Commit: {{ CI_PIPELINE_FORGE_URL }}
+  - name: "Pipeline summary"
+    image: "debian"
+    commands: |
+      if [ -e "$${CI_WORKSPACE}/.ci-pipeline-summary" ]; then cat "$${CI_WORKSPACE}/.ci-pipeline-summary"; fi
