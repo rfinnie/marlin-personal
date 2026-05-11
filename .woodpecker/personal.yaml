@@ -14,9 +14,25 @@ steps:
     image: "debian"
     commands: |
       set -x
+
+      mkdir -p /etc/apt/apt.conf.d
+      cat <<"EOM" >/etc/apt/apt.conf.d/99proxy
+      Acquire::http::Proxy "http://deb-proxy.snowman.lan:8000";
+      Acquire::https::Proxy "http://deb-proxy.snowman.lan:8000";
+      EOM
+      mkdir -p ~/.pip
+      cat <<"EOM" >~/.pip/pip.conf
+      [global]
+      index-url = http://omniproxi.snowman.lan/pypi/simple/
+      trusted-host = omniproxi.snowman.lan
+      EOM
+
       apt update
       apt -y install pipx git curl
       pipx install --global platformio
+      mkdir -p ~/.platformio
+      cache_url="http://artifacts.snowman.lan/cache_platformio_$${CI_REPO_OWNER}_$${CI_REPO_NAME}_$(uname -m).tar.gz"
+      curl --fail-with-body -H "Authorization: Basic $${ASSETS_AUTH}" "$${cache_url}" | tar -C ~/.platformio -zxf - || true
 
       git clone --depth=1 --no-tags --branch=bugfix-2.1.x https://github.com/MarlinFirmware/Marlin
       git clone --depth=1 --no-tags --branch=bugfix-2.1.x https://github.com/MarlinFirmware/Configurations
@@ -45,6 +61,8 @@ steps:
           echo "- http://artifacts.snowman.lan/$${artifact_fn}"
           echo ""
       } >>"$${CI_WORKSPACE}/.ci-pipeline-summary"
+      rm -rf ~/.platformio/packages ~/.platformio/platforms
+      tar -C ~/.platformio -zcf - . | curl --fail-with-body -T - -H "Authorization: Basic $${ASSETS_AUTH}" "$${cache_url}"
       exit "$ret"
     environment:
       ASSETS_AUTH:
